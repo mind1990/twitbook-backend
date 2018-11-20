@@ -9,7 +9,10 @@
   "author": "Tirapat Numsinvichietchai",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mongoose": "^5.3.13"
+    "mongoose": "^5.3.13",
+    "nodemon": "^1.18.6"
   }
 }
