@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/jwtauth', {
+
+mongoose.connect('mongodb://localhost/twitbook', {
 	userNewUrlParser: true });
 
 module.exports = {
 	User: require('./User'),
-	Post: require('./Post')
+	Post: require('./Post'),
+	Like: require('./Like')
 };

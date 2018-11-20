@@ -9,6 +9,7 @@ const PostSchema = new Schema({
 	comments: {
 		commentAuthor: String,
 		commentContent: String
+		commentDate: { type: Date, default: Date.now }
 	},
 	author: [UserSchema],
 	postdate: { type: Date, default: Date.now }
