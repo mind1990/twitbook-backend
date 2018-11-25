@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  username: {
+  email: {
     type: String,
     required: true
   },
@@ -14,9 +14,8 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true
+  avatar: {
+    type: String
   },
   date: {
     type: Date,
