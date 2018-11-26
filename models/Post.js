@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const UserSchema = require("./User").schema;
+const UserSchema = require('./User').schema;
 
 const PostSchema = new Schema({
   image: String,
@@ -21,6 +21,6 @@ const PostSchema = new Schema({
   }
 });
 
-const Post = mongoose.model("Post", PostSchema);
+const Post = mongoose.model('Post', PostSchema);
 
 module.exports = Post;
