@@ -18,8 +18,6 @@ const validatePostInput = require('../../validation/post');
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Posts works' }));
 
-
-// Anyone who's not loged in can see the posts
 // @route   GET api/posts
 // @desc    Get post
 // @access  Public
@@ -30,7 +28,6 @@ router.get('/', (req, res) => {
 	.catch(err => res.status(404).json({nopostsfound: 'No posts found'}));
 });
 
-// Get one post by id
 // @route   GET api/posts/:id
 // @desc    Get post by id
 // @access  Public
@@ -40,7 +37,6 @@ router.get('/:id', (req, res) => {
 	.catch(err => res.status(404).json({nopostfound: 'No post found with that ID'}));
 });
 
-// Only people who are logged in can post stuffs
 // @route   POST api/posts
 // @desc    Create post
 // @access  Private
@@ -63,7 +59,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	newPost.save().then(post => res.json(post));
 });
 
-// Delete a post
 // @route   DELETE api/posts/:id
 // @desc    Delete a post
 // @access  Private
@@ -83,8 +78,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
 	});
 });
 
-// Like a post
-// @route   POST api/posts/:id
+// @route   POST api/posts/like/:id
 // @desc    Like a post
 // @access  Private
 router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -104,6 +98,37 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req,
 		.catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 	});
 });
+
+// @route   POST api/posts/unlike/:id
+// @desc    Unlike a post
+// @access  Private
+router.post('/unlike/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+	Profile.findOne({ user: req.user.id })
+	.then(profile => {
+		Post.findById(req.params.id)
+		.then(post => {
+			if (
+				post.likes.filter(like => like.user.toString() === req.user.id).length === 0
+				) {
+				return res
+			.status(400)
+			.json({ notliked: 'You have not yet liked this post' });
+			}
+			// Get the remove index
+			const removeIndex = post.likes
+			.map(item => item.user.toString())
+			.indexOf(req.user.id);
+
+			// Splice out of array
+			post.likes.splice(removeIndex, 1);
+
+			// Save to database
+			post.save().then(post => res.json(post));
+		})
+		.catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+	});
+});
+
 
 module.exports = router;
 
