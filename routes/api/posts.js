@@ -15,7 +15,7 @@ const validatePostInput = require('../../validation/post');
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Posts works' }));
 
-// @route   GET api/posts
+// @route   Post api/posts
 // @desc    Create post
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -23,7 +23,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
 	// Check Validation
 	if (!isValid) {
-		// If any errors, send 400 with erros object
+		// If any errors, send 400 with errors object
 		return res.status(400).json(errors);
 	}
 
