@@ -8,7 +8,7 @@ const PostSchema = new Schema({
 		ref: 'users'
 	},
 	text: {
-		tyep: String,
+		type: String,
 		required: true
 	},
 	name: {
